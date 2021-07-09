@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Game from './components/game'
+import calculateWinner from './libraries/ticTacToe';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+function App(props) {
+    const [history, setHistory] = useState([{squares: Array(9).fill(null)}]);
+    const [stepNumber, setStepNumber] = useState(0);
+    const [xIsNext, setXisNext] = useState(true);
+  
+    const play = (i) => {
+      const nHistory = [...history]; 
+      const current = nHistory[nHistory.length - 1];
+      const squares = current.squares.slice();
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      squares[i] = xIsNext ? 'X' : 'O';
+      setHistory(nHistory.concat([{ squares }]));
+      setStepNumber(nHistory.length);
+      setXisNext(!xIsNext);
+    }
+    
+    const jumpTo = (step) => {
+      setStepNumber(step);
+      setXisNext((step % 2) === 0);
+    }
 
-export default App;
+    const current = history[stepNumber]; 
+    const winner = calculateWinner(current.squares);
+    const status = 
+      winner
+      ? 'Winner: ' + winner
+      : 'Next player: ' + (xIsNext ? 'X' : 'O');
+
+    return (
+       <Game 
+           play={play}
+           jumpTo={jumpTo}
+           status={status}
+           history={history}
+       />   
+    );
+  }
+
+  export default App;
