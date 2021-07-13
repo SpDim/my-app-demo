@@ -19,7 +19,7 @@ function Game({play, jumpTo, history, status}) {
       <div className="game">
         <div className="game-board">
           <Board 
-            squares={history[history.length -1].squares}
+            squares={history[history.length - 1].squares}
             play={play}
           />
         </div>
