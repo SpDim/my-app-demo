@@ -1,4 +1,5 @@
 import calculateWinner from "../../libraries/ticTacToe";
+import { play, jumpTo } from "./actions";
 
 const initialState = {
     history: [{squares: Array(9).fill(null)}], 
@@ -7,8 +8,10 @@ const initialState = {
   };
   
 function reducer(state, action) {
+    console.log('inReducer.', action, play.type, action.type, play.type === action.type);
     switch (action.type) {
-    case 'PLAY': 
+    case play.type: 
+        console.log(action);
         const history = [...state.history]; 
         const current = history[history.length - 1];
         const squares = current.squares.slice();
@@ -23,7 +26,7 @@ function reducer(state, action) {
             xIsNext: !state.xIsNext,
             stepNumber: history.length,
         }  
-    case 'JUMP_TO':
+    case jumpTo.type:
         const step = action.payload.step;
         return {
             ...state,

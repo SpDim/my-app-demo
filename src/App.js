@@ -2,12 +2,10 @@ import React, { useReducer } from 'react';
 import Game from './components/game'
 import calculateWinner from './libraries/ticTacToe';
 import { reducer, initialState } from './models/ticTacToe/reducer';
+import { play, jumpTo } from './models/ticTacToe/actions';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState); 
-  const play = (i) => dispatch({ type: 'PLAY', payload: { i } });
-  const jumpTo = (step) => dispatch({ type: 'JUMP_TO', payload: { step } });
-  
   const current = state.history[state.stepNumber]; 
   const winner = calculateWinner(current.squares);
   const status = 
@@ -17,8 +15,8 @@ function App() {
 
   return (
       <Game 
-          play={play}
-          jumpTo={jumpTo}
+          play={i => dispatch(play({ i }))}
+          jumpTo={step => dispatch(jumpTo({ step }))}
           status={status}
           history={state.history}
       />   
