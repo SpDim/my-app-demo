@@ -3,33 +3,24 @@ import Square from '../square';
 
 import './board.css';
 
-const Board = ( {squares, play} ) => {
-  const renderSquare = (i) => (
-    <Square 
-      value={squares[i]} 
-      play={() => play(i)} 
-    />
-  );
-
-  return (
-    <div>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
+const Board = () => (
+  <div>
+    <div className="board-row">
+      <Square index={0} />
+      <Square index={1} />
+      <Square index={2} />
     </div>
-  );
-}
+    <div className="board-row">
+      <Square index={3} />
+      <Square index={4} />
+      <Square index={5} />
+    </div>
+    <div className="board-row">
+      <Square index={6} />
+      <Square index={7} />
+      <Square index={8} />
+    </div>
+  </div>
+);
 
 export default Board;
