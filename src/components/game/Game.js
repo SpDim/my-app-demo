@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 import Board from '../board';
 import { GameContext } from '../GameContext';
+import { play, jumpTo } from '../../models/ticTacToe/actions';
+import { store } from '../../redux/store';
 
 import './game.css';
 
@@ -29,9 +32,26 @@ function Game({ history, jumpTo, status }) {
   );
 }
 
-const GameContainer = props => {
-  const { history, jumpTo, play, status } = useContext(GameContext);
-  return <Game history={history} jumpTo={jumpTo} play={play} status={status} />
-}
+const mapStateToProps = state => {
+  return {
+    history: state.history,
+    status: state.status
+  };
+};
 
-export default GameContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    play: i => dispatch(play({ i })),
+    jumpTo: step => dispatch(jumpTo({ step })),
+  };
+};
+
+// const GameContainer = props => {
+//   const { history, jumpTo, play, status } = useContext(GameContext);
+//   return <Game history={history} jumpTo={jumpTo} play={play} status={status} />
+// }
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps,
+)(Game);
