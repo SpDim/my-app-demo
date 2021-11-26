@@ -4,6 +4,7 @@ import Board from '../board';
 import { GameContext } from '../GameContext';
 import { play, jumpTo } from '../../models/ticTacToe/actions';
 import { store } from '../../redux/store';
+import calculateWinner from '../../libraries/ticTacToe';
 
 import './game.css';
 
@@ -32,10 +33,18 @@ function Game({ history, jumpTo, status }) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  const stepNumber = state.stepNumber;
+  const history = state.history[stepNumber];
+  const squares = history?.squares;
+  const winner = calculateWinner(squares);
+  const status =             
+    winner
+    ? 'Winner: ' + winner
+    : 'Next player: ' + (state.xIsNext ? 'X' : 'O')
   return {
     history: state.history,
-    status: state.status
+    status
   };
 };
 

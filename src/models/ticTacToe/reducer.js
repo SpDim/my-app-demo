@@ -5,14 +5,15 @@ const initialState = {
     history: [{squares: Array(9).fill(null)}], 
     stepNumber: 0, 
     xIsNext: true,
-    status: 'Next player: X'
+    status: 'Next player: X',
+    winner: null
   };
   
 function reducer(state, action) {
     console.log('inReducer.', action, play.type, action.type, play.type === action.type);
     // const history = [...state.history]; 
     // console.log('history: ' ,history);
-    // const current = history[history.length];
+    // const current = history[history.length - 1];
     // const winner = calculateWinner(current?.squares);
     // const status = 
     //   winner
@@ -25,21 +26,32 @@ function reducer(state, action) {
         // const history = [...state.history]; 
         // const current = history[history.length - 1];
         const i = action.payload.i;
-        // console.log(calculateWinner(squares));
         // if (calculateWinner(squares) || squares[i]) {
         //     return state
         // }
         let stepNumber = state.stepNumber;
-        const newHistory = [...state?.history];
-        const currHist = newHistory[stepNumber];
-        const squares = [...currHist?.squares];
+        const history = [...state.history];
+        const currHist = history[stepNumber];
+        console.log('currHist: ', currHist);
+        const squares = [...currHist.squares];
+        const winner = calculateWinner(squares); 
+        const status = 
+            winner
+            ? 'Winner: ' + winner
+            : 'Next player: ' + (!state.xIsNext ? 'X' : 'O');        
+        if (winner || squares[i]) {    
+            // stepNumber += 1;
+            console.log('Winner: ', winner);    
+            return state
+        }
         squares[i] = state.xIsNext ? 'X' : 'O';
         return {
             ...state, 
-            history: [...state.history].concat([{squares}]),
+            history: [...history].concat([{squares}]),
             xIsNext: !state.xIsNext,
             stepNumber: stepNumber += 1,
-            // status
+            status,
+            winner: calculateWinner(squares)
         }  
     case jumpTo.type:
         const step = action.payload.step;
@@ -48,7 +60,8 @@ function reducer(state, action) {
             history: state.history.slice(0, step + 1),
             stepNumber: step,
             xIsNext: (step % 2) === 0,
-            // status
+            // status,
+            // winner
         }
     default: 
         return state;

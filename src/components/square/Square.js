@@ -15,16 +15,16 @@ const Square = ({ value, play, index }) => (
 
 const mapStateToProps = (state, ownProps) => {
     const stepNumber = state.stepNumber;
-    const history = state?.history[stepNumber];
-    const squares = history?.squares;
+    const history = state.history[stepNumber];
+    const squares = history.squares;
     const currentSquare = squares[ownProps.index];
     // console.log('current: ', currentSquare);
     // console.log('history: ', history);
-    // console.log('squares: ', squares);
+    console.log('SQUARES: ', squares);
     console.log('stepNumber: ', stepNumber);
     return {
         // squares: state.history[state.history.length - 1].squares
-        value: currentSquare || '',
+        value: currentSquare,
     };
 };
 
