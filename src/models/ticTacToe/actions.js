@@ -10,3 +10,4 @@ import { Action } from "../../libraries/models/Action";
 
 export const play = Action('PLAY');
 export const jumpTo = Action('JUMP_TO');
+export const setPlayer = Action('SET_PLAYER');

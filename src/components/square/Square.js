@@ -3,12 +3,17 @@ import { GameContext } from '../GameContext';
 import { connect } from 'react-redux';
 import { play, jumpTo } from '../../models/ticTacToe/actions';
 import { store } from '../../redux/store';
+import calculateWinner from '../../libraries/ticTacToe';
 
 import './square.css';
 
 
-const Square = ({ value, play, index }) => (
-    <button className="square" onClick={() => play(index)}>
+const Square = ({ value, play, index, hasWinner }) => (
+    <button className="square" onClick={() => {
+        if(!hasWinner) {
+            play(index);
+        }
+    }}>
         {value}
     </button>
 );
@@ -18,6 +23,8 @@ const mapStateToProps = (state, ownProps) => {
     const history = state.history[stepNumber];
     const squares = history.squares;
     const currentSquare = squares[ownProps.index];
+    const winner = calculateWinner(squares);
+    console.log(winner)
     // console.log('current: ', currentSquare);
     // console.log('history: ', history);
     console.log('SQUARES: ', squares);
@@ -25,6 +32,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         // squares: state.history[state.history.length - 1].squares
         value: currentSquare,
+        hasWinner: Boolean(winner)
     };
 };
 

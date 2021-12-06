@@ -1,0 +1,2 @@
+[1202/140057.687:ERROR:registration_protocol_win.cc(102)] CreateFile: Δεν είναι δυνατή η εύρεση του καθορισμένου αρχείου από το σύστημα. (0x2)
+[1202/140102.614:ERROR:registration_protocol_win.cc(102)] CreateFile: Δεν είναι δυνατή η εύρεση του καθορισμένου αρχείου από το σύστημα. (0x2)
